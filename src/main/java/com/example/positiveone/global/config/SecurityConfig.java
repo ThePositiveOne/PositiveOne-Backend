@@ -30,7 +30,6 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/login/**").permitAll()
                 .antMatchers("/board/all/**").permitAll()
-                .antMatchers("/board/calendar/**").permitAll()
                 .anyRequest().authenticated();
         return http.build();
     }
