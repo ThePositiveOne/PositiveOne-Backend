@@ -8,7 +8,6 @@ import com.example.positiveone.global.response.ResultResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
@@ -41,7 +40,7 @@ public class JwtErrorFilter extends HttpFilter {
     ){
         ObjectMapper objectMapper = new ObjectMapper();
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setContentType("application/json;charset=UTF-8");
         ResultResponse<ErrorResponse> resultResponse = ResultResponse.fail(ErrorResponse.of(errorCode.getMessage()));
         try{
             response.getWriter().println(objectMapper.writeValueAsString(resultResponse));
