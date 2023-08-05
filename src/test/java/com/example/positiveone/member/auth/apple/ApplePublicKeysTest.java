@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ApplePublicKeysTest {
 
@@ -17,7 +16,7 @@ class ApplePublicKeysTest {
 
         ApplePublicKeys applePublicKeys = new ApplePublicKeys(List.of(applePublicKey));
 
-        assertThat(applePublicKeys.getMatchesKey("alg", "kid"));
+        assertEquals(applePublicKeys.getMatchesKey("alg", "kid"), applePublicKey);
     }
 
 
@@ -28,7 +27,7 @@ class ApplePublicKeysTest {
 
         ApplePublicKeys applePublicKeys = new ApplePublicKeys(List.of(applePublicKey));
 
-        assertThatThrownBy(() -> applePublicKeys.getMatchesKey("invalid", "invalid"))
-                .isInstanceOf(IllegalArgumentException.class);
+        assertThrows(IllegalArgumentException.class,
+                () -> applePublicKeys.getMatchesKey("invalid", "invalid"));
     }
 }

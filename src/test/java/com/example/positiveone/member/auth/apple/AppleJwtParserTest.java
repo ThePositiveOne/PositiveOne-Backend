@@ -12,8 +12,9 @@ import java.security.*;
 import java.util.Date;
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 
 class AppleJwtParserTest {
 
@@ -40,16 +41,16 @@ class AppleJwtParserTest {
         Map<String, String> headers = appleJwtParser.parserHeaders(identityToken);
 
 
-        assertThat(headers.get("kid")).isEqualTo("YuyXoY");
-        assertThat(headers.get("alg")).isEqualTo("RS256");
+        assertEquals(headers.get("kid"), "YuyXoY");
+        assertEquals(headers.get("alg"), "RS256");
     }
 
 
     @Test
     @DisplayName("올바르지 않은 identity token exception")
     void parseHeadersWithInvalidToken(){
-        assertThatThrownBy(() -> appleJwtParser.parserHeaders("invalidToken"))
-                .isInstanceOf(InvalidTokenException.class);
+        assertThrows(InvalidTokenException.class,
+                ()-> appleJwtParser.parserHeaders("invalidToken"));
     }
 
 
@@ -74,7 +75,8 @@ class AppleJwtParserTest {
         Claims claims = appleJwtParser.parsePublicKeyAndGetClaims(identityToken, publicKey);
 
 
-        assertThat(claims.get("email", String.class)).isEqualTo("1234@gmail.com");
+        assertEquals(claims.get("email", String.class),"1234@gmail.com");
+
     }
 
 
@@ -95,8 +97,9 @@ class AppleJwtParserTest {
                 .signWith(SignatureAlgorithm.RS256, privateKey)
                 .compact();
 
-        assertThatThrownBy(() -> appleJwtParser.parsePublicKeyAndGetClaims(identityToken, publicKey))
-                .isInstanceOf(ExpiredTokenException.class);
+        assertThrows(ExpiredTokenException.class,
+                () -> appleJwtParser.parsePublicKeyAndGetClaims(identityToken, publicKey));
+
     }
 
 
@@ -118,7 +121,7 @@ class AppleJwtParserTest {
                 .compact();
 
 
-        assertThatThrownBy(() -> appleJwtParser.parsePublicKeyAndGetClaims(identityToken, differPublicKey))
-                .isInstanceOf(InvalidTokenException.class);
+        assertThrows(InvalidTokenException.class,
+                () -> appleJwtParser.parsePublicKeyAndGetClaims(identityToken, differPublicKey));
     }
 }

@@ -6,7 +6,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 class AppleClaimsValidatorTest {
 
@@ -24,7 +25,7 @@ class AppleClaimsValidatorTest {
                 .setAudience(CLIENT_ID);
 
 
-        assertThat(appleClaimsValidator.isValid(claims)).isTrue();
+        assertTrue(appleClaimsValidator.isValid(claims));
     }
 
 
@@ -37,6 +38,6 @@ class AppleClaimsValidatorTest {
                 .setAudience("invalid");
 
 
-        assertThat(appleClaimsValidator.isValid(claims)).isFalse();
+        assertFalse(appleClaimsValidator.isValid(claims));
     }
 }

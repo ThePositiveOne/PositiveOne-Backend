@@ -13,9 +13,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.security.*;
 import java.util.Date;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import static org.assertj.core.api.Assertions.assertThat;
 
 
 @SpringBootTest
@@ -59,8 +58,8 @@ class AppleOAuthUserProviderTest {
         OAuthMemberRes oAuthMemberRes = appleOAuthUserProvider.getAppleMember(identityToken);
 
 
-        assertThat(oAuthMemberRes.getLoginId()).isEqualTo(sub);
-        assertThat(oAuthMemberRes.getEmail()).isEqualTo("1234@gmail.com");
+        assertEquals(oAuthMemberRes.getLoginId(),sub);
+        assertEquals(oAuthMemberRes.getEmail(),"1234@gmail.com");
     }
 
 
@@ -88,8 +87,8 @@ class AppleOAuthUserProviderTest {
         when(appleClaimsValidator.isValid(any())).thenReturn(false);
 
 
-        assertThatThrownBy(() -> appleOAuthUserProvider.getAppleMember(identityToken))
-                .isInstanceOf(InvalidTokenException.class);
+        assertThrows(InvalidTokenException.class,
+                () -> appleOAuthUserProvider.getAppleMember(identityToken));
 
     }
 

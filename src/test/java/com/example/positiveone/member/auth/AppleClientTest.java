@@ -11,7 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 import java.util.Objects;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 @SpringBootTest
 class AppleClientTest {
@@ -28,7 +29,7 @@ class AppleClientTest {
         boolean isKeysNonNull = keys.stream()
                 .allMatch(this::isAllNotNull);
 
-        assertThat(isKeysNonNull).isTrue();
+        assertTrue(isKeysNonNull);
     }
     private boolean isAllNotNull(ApplePublicKey applePublicKey){
         return Objects.nonNull(applePublicKey.getKty()) && Objects.nonNull(applePublicKey.getKid()) &&
